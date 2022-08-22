@@ -18,19 +18,43 @@ namespace MenuDinamico
 
         private void frmMenuDinamico_Load(object sender, EventArgs e)
         {
-            CargarMenu(0, null, menuStrip1, 1);
+            try
+            {
+                if (this.menuStrip1.Items.Count > 0)
+                {
+                    this.menuStrip1.Items.Clear();
+                }
 
+                GetMenuCarga(0, null, menuStrip1);
+            }   
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+                throw;
+            }
 
-            ////NMenu nMenu2 = new NMenu();
-            ////nMenu2.GetMenu();
-            var data = nMenu.GetMenu();
-            //var responseData = nMenu.GetMenu();
         }
 
-        private void CargarMenu(int pIdMenu, ToolStripMenuItem pItem, MenuStrip pMenu,int pCodUsuario)
+        private void GetMenuCarga(int IdMenu, ToolStripMenuItem parentMenuItem, MenuStrip menu)
+        {
+            try
+            {
+                if (this.menuStrip1.Items.Count > 0)
+                {
+                    this.menuStrip1.Items.Clear();
+                }
+                this.CargarMenu(IdMenu, parentMenuItem, menu);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void CargarMenu(int pIdMenu, ToolStripMenuItem pItem, MenuStrip pMenu)
         {
 
-            var menuData = nMenu.GetMenu();
+            var menuData = nMenu.GetMenu(pIdMenu, 1);
 
             foreach (var item in menuData)
             {
@@ -41,15 +65,15 @@ namespace MenuDinamico
                     Tag = item.UrlMenu
                 };
 
-                if (item.ParendIdMenu == 0)
+                if (pIdMenu == 0)
                 {
-                    pMenu.Items.Add(menuDinamico);
+                    this.menuStrip1.Items.Add(menuDinamico);
                 }
                 else
                 {
                     pItem.DropDownItems.Add(menuDinamico);
                 }
-                CargarMenu(item.ParendIdMenu, menuDinamico, pMenu, pCodUsuario);
+                CargarMenu(item.IdMenu, menuDinamico, pMenu);
             }
         }
     }

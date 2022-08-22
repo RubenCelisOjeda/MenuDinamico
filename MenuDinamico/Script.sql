@@ -1,5 +1,5 @@
 
-USE BD_CRUD
+USE DB_MENU_DINAMICO
 
 --CREACION DE LA TABLA MENU
 CREATE TABLE SMAN_MENU
@@ -50,10 +50,20 @@ CREATE TABLE SMAN_MENU_ACCESO
 SELECT *
 FROM SMAN_MENU
 
-SELECT *
-FROM SMAN_MENU_ACCESO
+SELECT * FROM SMAN_MENU_ACCESO 
 
 INSERT INTO SMAN_MENU_ACCESO  (IdMenu,RolUsuario,IdUsuario,OrderMenu,ActivoMenu,DeleteMenu,DateCreate,DateUpdate,DateDelete,UserAdded,
 							   UserLastUpdate,UserDelete)
 							   
 							   VALUES (1,'Administrador',1,1,1,0,GETDATE(),GETDATE(),null,'sa','sa','')
+
+
+SELECT MA.IdMenu,
+		M.ParenIdMenu,
+		M.TitleMenu,
+		M.UrlMenu,
+		MA.IdUsuario
+
+	FROM [dbo].[SMAN_MENU_ACCESO] MA INNER JOIN SMAN_MENU M ON MA.IdMenu = M.IdMenu
+	WHERE  M.ParenIdMenu = 0 AND
+		   MA.IdUsuario = 1

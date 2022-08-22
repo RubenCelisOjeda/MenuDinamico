@@ -13,9 +13,9 @@ namespace _3.Capa.Negocio
             dMenu = new DMenu();
         }
 
-        public IList<EMenuDinamico> GetMenu()
+        public IList<EMenuDinamico> GetMenu(int parentMenuId, int pIdUsuario)
         {
-            return dMenu.GetMenu();
+            return dMenu.GetMenu(parentMenuId, pIdUsuario);
         }
     }
 }
